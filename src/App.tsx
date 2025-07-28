@@ -219,8 +219,24 @@ function App() {
     }
   ];
 
-  // Calculate total pages (groups of 3)
-  const videosPerPage = 3;
+  // Calculate total pages (responsive: 1 on mobile, 3 on desktop)
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const newIsMobile = window.innerWidth < 768;
+      if (newIsMobile !== isMobile) {
+        setIsMobile(newIsMobile);
+        setCurrentVideoIndex(0); // Reset carousel when switching between mobile/desktop
+      }
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, [isMobile]);
+
+  const videosPerPage = isMobile ? 1 : 3;
   const totalPages = Math.ceil(videoTestimonials.length / videosPerPage);
 
   // Carousel navigation functions
@@ -437,7 +453,7 @@ function App() {
       </section>
 
       {/* Methodology Section */}
-      <section id="metodologia" className="py-20 transition-colors duration-300">
+      <section id="metodologia" className="py-12 lg:py-20 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div id="methodology-header" className={`text-center mb-16 transition-all duration-1000 ${isVisible['methodology-header'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className={`text-4xl lg:text-5xl font-bold mb-4 transition-colors duration-300 ${
@@ -905,7 +921,7 @@ function App() {
               >
                 {Array.from({ length: totalPages }).map((_, pageIndex) => (
                   <div key={pageIndex} className="w-full flex-shrink-0">
-                    <div className="grid md:grid-cols-3 gap-6">
+                    <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'md:grid-cols-3'}`}>
                       {videoTestimonials
                         .slice(pageIndex * videosPerPage, (pageIndex + 1) * videosPerPage)
                         .map((testimonial, index) => (
@@ -965,10 +981,10 @@ function App() {
               </div>
             </div>
 
-            {/* Navigation Arrows - More separated */}
+            {/* Navigation Arrows - Responsive positioning */}
             <button
               onClick={prevVideo}
-              className={`absolute -left-16 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+              className={`absolute ${isMobile ? 'left-2' : '-left-16'} top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
                 isDark
                   ? 'bg-gray-800/90 hover:bg-gray-700 text-white'
                   : 'bg-white/90 hover:bg-white text-gray-900'
@@ -979,7 +995,7 @@ function App() {
 
             <button
               onClick={nextVideo}
-              className={`absolute -right-16 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+              className={`absolute ${isMobile ? 'right-2' : '-right-16'} top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
                 isDark
                   ? 'bg-gray-800/90 hover:bg-gray-700 text-white'
                   : 'bg-white/90 hover:bg-white text-gray-900'
