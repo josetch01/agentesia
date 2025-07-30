@@ -66,9 +66,9 @@
 }
 
 .animate-scroll {
-  animation: scroll 30s linear infinite;
+  animation: scroll 10s linear infinite;
 }
-
+ 
 @keyframes scrollVertical {
   0% {
     transform: translateY(0);
@@ -148,11 +148,34 @@
     transform: translateX(0);
   }
 }
-
+@keyframes scrollHorizontalTree {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
 .animate-scroll-horizontal {
   animation: scrollHorizontal 15s linear infinite;
 }
 
 .animate-scroll-horizontal-reverse {
   animation: scrollHorizontalReverse 15s linear infinite;
+}
+.animate-scroll-horizontal-tree{
+    animation: scrollHorizontalTree 15s linear infinite;
+
+}
+@keyframes pulse-light {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse-light {
+  animation: pulse-light 2s infinite ease-in-out;
 }
