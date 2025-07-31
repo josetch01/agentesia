@@ -280,6 +280,7 @@ function App() {
 
   const handleMouseUp = () => {
     setIsDragging(false);
+    setAccumulatedOffset(prev => prev + dragOffset);
     setDragOffset(0);
     setIsPaused(false);
   };
@@ -300,6 +301,7 @@ function App() {
 
   const handleTouchEnd = () => {
     setIsDragging(false);
+    setAccumulatedOffset(prev => prev + dragOffset);
     setDragOffset(0);
     setIsPaused(false);
   };
