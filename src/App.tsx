@@ -375,9 +375,29 @@ function App() {
 
         {/* Hero Section */}
         <section className="pt-5 pb-8 relative overflow-hidden flex items-center transition-colors duration-300">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-            <div className="absolute top-40 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
+          <div className="absolute inset-0 opacity-20">
+            {/* AI Star Shape 1 */}
+            <div className="absolute top-20 left-10 w-72 h-72 mix-blend-multiply filter blur-xl animate-pulse">
+              <div className="relative w-full h-full">
+                <div className="star-shape bg-gradient-to-br from-blue-400 to-cyan-400 animate-spin-slow"></div>
+              </div>
+            </div>
+
+            {/* AI Star Shape 2 */}
+            <div className="absolute top-40 right-10 w-72 h-72 mix-blend-multiply filter blur-xl animate-pulse delay-1000">
+              <div className="relative w-full h-full">
+                <div className="star-shape bg-gradient-to-br from-purple-400 to-pink-400 animate-spin-slow" style={{ animationDirection: 'reverse' }}></div>
+              </div>
+            </div>
+
+            {/* Additional AI Elements */}
+            <div className="absolute bottom-20 left-1/4 w-48 h-48 mix-blend-multiply filter blur-2xl animate-pulse delay-2000">
+              <div className="star-shape bg-gradient-to-br from-cyan-300 to-blue-300 animate-bounce-slow"></div>
+            </div>
+
+            <div className="absolute top-1/3 right-1/4 w-32 h-32 mix-blend-multiply filter blur-xl animate-pulse delay-3000">
+              <div className="star-shape bg-gradient-to-br from-blue-300 to-indigo-300 animate-pulse"></div>
+            </div>
           </div>
 
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
@@ -1481,18 +1501,26 @@ function App() {
                             </div>
                           </div>
 
-                          {/* Video */}
-                          <div className="mb-6">
-                            <div className="relative rounded-2xl overflow-hidden shadow-lg">
+                          {/* Video - Vertical Format (Mobile Style) */}
+                          <div className="mb-6 flex justify-center">
+                            <div className="relative rounded-2xl overflow-hidden shadow-lg w-48 h-80">
                               <video
                                 src={testimonial.videoSrc}
                                 poster={testimonial.thumbnail}
                                 controls
-                                className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                                 preload="metadata"
                               >
                                 Tu navegador no soporta el elemento de video.
                               </video>
+                              {/* Mobile-style overlay */}
+                              <div className="absolute top-2 left-2 right-2 flex justify-between items-center">
+                                <div className="w-2 h-2 bg-white rounded-full opacity-60"></div>
+                                <div className="text-white text-xs opacity-60 bg-black/20 px-2 py-1 rounded-full backdrop-blur-sm">
+                                  Testimonio
+                                </div>
+                                <div className="w-2 h-2 bg-white rounded-full opacity-60"></div>
+                              </div>
                             </div>
                           </div>
 
@@ -1551,18 +1579,26 @@ function App() {
                             </div>
                           </div>
 
-                          {/* Video */}
-                          <div className="mb-6">
-                            <div className="relative rounded-2xl overflow-hidden shadow-lg">
+                          {/* Video - Vertical Format (Mobile Style) */}
+                          <div className="mb-6 flex justify-center">
+                            <div className="relative rounded-2xl overflow-hidden shadow-lg w-48 h-80">
                               <video
                                 src={testimonial.videoSrc}
                                 poster={testimonial.thumbnail}
                                 controls
-                                className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                                 preload="metadata"
                               >
                                 Tu navegador no soporta el elemento de video.
                               </video>
+                              {/* Mobile-style overlay */}
+                              <div className="absolute top-2 left-2 right-2 flex justify-between items-center">
+                                <div className="w-2 h-2 bg-white rounded-full opacity-60"></div>
+                                <div className="text-white text-xs opacity-60 bg-black/20 px-2 py-1 rounded-full backdrop-blur-sm">
+                                  Testimonio
+                                </div>
+                                <div className="w-2 h-2 bg-white rounded-full opacity-60"></div>
+                              </div>
                             </div>
                           </div>
 
@@ -1604,8 +1640,24 @@ function App() {
         <section className="py-20 bg-cyan-900 transition-colors duration-300  relative overflow-hidden">
           <div className="absolute inset-0 opacity-20">
             <div className="absolute top-0 left-0 w-full h-full bg-black/10"></div>
-            <div className="absolute -top-40 -right-40 w-80 h-80 bg-white rounded-full opacity-10"></div>
-            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-white rounded-full opacity-10"></div>
+
+            {/* AI Star Shapes for CTA */}
+            <div className="absolute -top-40 -right-40 w-80 h-80 opacity-15">
+              <div className="star-shape bg-gradient-to-br from-white to-cyan-200 animate-spin-slow blur-2xl"></div>
+            </div>
+
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 opacity-15">
+              <div className="star-shape bg-gradient-to-br from-white to-blue-200 animate-bounce-slow blur-2xl"></div>
+            </div>
+
+            {/* Additional AI elements */}
+            <div className="absolute top-1/4 left-1/4 w-32 h-32 opacity-10">
+              <div className="star-shape bg-gradient-to-br from-white to-gray-200 animate-pulse"></div>
+            </div>
+
+            <div className="absolute bottom-1/4 right-1/4 w-24 h-24 opacity-10">
+              <div className="star-shape bg-gradient-to-br from-white to-cyan-100 animate-bounce-slow" style={{ animationDelay: '1s' }}></div>
+            </div>
           </div>
 
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
