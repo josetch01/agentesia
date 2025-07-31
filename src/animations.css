@@ -148,6 +148,7 @@
     transform: translateX(0);
   }
 }
+
 @keyframes scrollHorizontalTree {
   0% {
     transform: translateX(0%);
@@ -156,16 +157,21 @@
     transform: translateX(-100%);
   }
 }
+
 .animate-scroll-horizontal {
   animation: scrollHorizontal 15s linear infinite;
 }
-
 .animate-scroll-horizontal-reverse {
   animation: scrollHorizontalReverse 15s linear infinite;
 }
-.animate-scroll-horizontal-tree{
-    animation: scrollHorizontalTree 15s linear infinite;
+.animate-scroll-horizontal-tree {
+  animation: scrollHorizontalTree 15s linear infinite;
+}
 
+/* Difuminado a los lados */
+.fade-mask {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 @keyframes pulse-light {
   0%, 100% {
@@ -178,4 +184,37 @@
 
 .animate-pulse-light {
   animation: pulse-light 2s infinite ease-in-out;
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.4s ease-out forwards;
+}
+
+/* Testimonials infinite scroll animation */
+@keyframes testimonialsScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-testimonials-scroll {
+  animation: testimonialsScroll 30s linear infinite;
+}
+
+.animate-testimonials-scroll-paused {
+  animation-play-state: paused;
 }

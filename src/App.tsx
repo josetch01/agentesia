@@ -13,9 +13,7 @@ const ThemeContext = createContext({
 const useTheme = () => useContext(ThemeContext);
 import {
   Bot,
-  ChevronRight,
-  ChevronLeft,
-  Play,
+  BarChart,
   Star,
   CheckCircle,
   Zap,
@@ -38,6 +36,7 @@ import {
   Sun,
   User,
   Sparkle,
+  Activity
 } from "lucide-react";
 
 function App() {
@@ -46,8 +45,7 @@ function App() {
   const [typingText, setTypingText] = useState("");
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-
+ 
   const toggleTheme = () => {
     setIsDark(!isDark);
   };
@@ -187,7 +185,7 @@ function App() {
         "Camila estaba trabajando como freelancer y vio la IA antes de todos",
       videoSrc: videotestimonio1,
       thumbnail:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=300&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=300&fit=crop&crop=face",
       avatar: "👩‍💼",
     },
     {
@@ -235,11 +233,14 @@ function App() {
       role: "Consultora",
       content: "Laura multiplicó sus ingresos como consultora implementando IA",
       videoSrc: "/src/assets/video6.mp4",
-      thumbnail: "/src/assets/thumb6.jpg",
+      thumbnail: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=300&fit=crop&crop=face",
       avatar: "👩‍💻",
     },
   ];
+ 
+ 
 
+ 
   // Calculate total pages (responsive: 1 on mobile, 3 on desktop)
   const [isMobile, setIsMobile] = useState(false);
 
@@ -248,7 +249,6 @@ function App() {
       const newIsMobile = window.innerWidth < 768;
       if (newIsMobile !== isMobile) {
         setIsMobile(newIsMobile);
-        setCurrentVideoIndex(0); // Reset carousel when switching between mobile/desktop
       }
     };
 
@@ -257,30 +257,11 @@ function App() {
     return () => window.removeEventListener("resize", checkMobile);
   }, [isMobile]);
 
-  const videosPerPage = isMobile ? 1 : 3;
-  const totalPages = Math.ceil(videoTestimonials.length / videosPerPage);
+  // No necesitamos estado para el carrusel infinito ya que será puramente CSS
 
-  // Carousel navigation functions
-  const nextVideo = () => {
-    setCurrentVideoIndex((prev) => (prev + 1) % totalPages);
-  };
 
-  const prevVideo = () => {
-    setCurrentVideoIndex((prev) => (prev - 1 + totalPages) % totalPages);
-  };
 
-  const goToVideo = (index) => {
-    setCurrentVideoIndex(index);
-  };
 
-  // Auto-play carousel
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextVideo();
-    }, 7000); // Change page every 7 seconds
-
-    return () => clearInterval(interval);
-  }, [currentVideoIndex]);
 
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>
@@ -290,39 +271,30 @@ function App() {
         }`}
       >
         {/* Logo Section */}
-        <div className="pt-6 pb-4">
+        <div className="pt-20 pb-4">
           <div className="flex flex-col items-center relative">
             <div className="flex items-center justify-center mb-3">
               <div className="flex items-center justify-center">
                 <img
                   src={logo}
                   alt="Agentes de IA - Soluciones de Inteligencia Artificial"
-                  className="h-16 sm:h-16 md:h-22 lg:h-24 w-auto object-contain transition-all duration-300 hover:scale-105 rounded-lg"
+                  className="h-16 sm:h-16 md:h-30 lg:h-32 w-auto object-contain transition-all duration-300 hover:scale-105 rounded-lg"
                 />
               </div>
             </div>
 
             {/* Availability Status */}
-            <div className="flex flex-col items-center space-x-2 bg-black text-white px-4 py-2 rounded-full mb-2">
+            <div className="flex flex-col items-center space-x-2 bg-gray-800 text-white px-4 py-2 rounded-full mb-2">
               <div className="flex  row gap-2 justify-start items-center">
                 <div className="w-2.5 h-2.5 bg-green-500 rounded-full glow-pulse">
                   {" "}
                 </div>
                 <span className="text-sm font-normal">
-                  Available now, only 3 spots left
+                  Creado por Joyson Llapo
                 </span>{" "}
                 <Verified className="w-5 h-5 text-blue-500" />
               </div>
-              <div className="flex text-xs gap-1 justify-end items-center text-gray-300">
-                Creado por{" "}
-                <span
-                  className={`font-medium ${
-                    isDark ? "text-gray-300" : "text-gray-700"
-                  }`}
-                >
-                  Joyson Llapo
-                </span>
-              </div>
+             
             </div>
           </div>
         </div>
@@ -350,7 +322,7 @@ function App() {
                     isDark ? "text-white" : "text-gray-800"
                   }`}
                 >
-                  La solución #1 para Negocios de{" "}
+                  La Solución #1 <br/>para Negocios de{" "}
                   <span className="bg-cyan-500 bg-clip-text text-transparent md:inline block">
                     Alto Crecimiento
                   </span>
@@ -369,7 +341,7 @@ function App() {
               {/* Video Section */}
               <div
                 id="hero-video"
-                className={`w-full max-w-4xl transition-all duration-1000 delay-300 ${
+                className={`w-full max-w-3xl transition-all duration-1000 delay-300 ${
                   isVisible["hero-video"]
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-10"
@@ -575,7 +547,7 @@ function App() {
         isDark ? "text-gray-400" : "text-gray-600"
       }`}
     >
-      De la idea a la automatización — seguimos un camino claro y comprobado
+      De la idea a la automatización <br/> Seguimos un camino claro y comprobado
     </p>
   </div>
 </div>
@@ -622,231 +594,85 @@ function App() {
                   </p>
 
                   {/* Dynamic Metrics Indicators - Two Rows Aligned */}
-                  <div className="mb-6">
-                    <div className="flex justify-center space-x-8 lg:space-x-16">
-                      <div className="text-start transition-all duration-500 flex gap-2">
-                        <div
-                          className={`text-sm ${
-                            isDark ? "text-gray-300" : "text-gray-700"
-                          }`}
-                        >
-                          Ingresos
-                        </div>
-                        <div
-                          className={`text-base font-bold transition-colors duration-500 ${
-                            chartMetrics.revenue.value >= 0
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {chartMetrics.revenue.value >= 0 ? "+" : ""}
-                          {Math.round(chartMetrics.revenue.value)}%
-                        </div>
-                      </div>
-                      <div className="text-start transition-all duration-500 flex gap-2">
-                        <div
-                          className={`text-sm ${
-                            isDark ? "text-gray-300" : "text-gray-700"
-                          }`}
-                        >
-                          Productividad
-                        </div>
-                        <div
-                          className={`text-base font-bold transition-colors duration-500 ${
-                            chartMetrics.productivity.value >= 0
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {chartMetrics.productivity.value >= 0 ? "+" : ""}
-                          {Math.round(chartMetrics.productivity.value)}%
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex justify-center space-x-8 lg:space-x-16 mt-3">
-                      <div className="text-start transition-all duration-500 flex gap-2">
-                        <div
-                          className={`text-sm ${
-                            isDark ? "text-gray-300" : "text-gray-700"
-                          }`}
-                        >
-                          Ventas
-                        </div>
-                        <div
-                          className={`text-base font-bold transition-colors duration-500 ${
-                            chartMetrics.sales.value >= 0
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {chartMetrics.sales.value >= 0 ? "+" : ""}
-                          {Math.round(chartMetrics.sales.value)}%
-                        </div>
-                      </div>
-                      <div className="text-start transition-all duration-500 flex gap-2">
-                        <div
-                          className={`text-sm ${
-                            isDark ? "text-gray-300" : "text-gray-700"
-                          }`}
-                        >
-                          Costos
-                        </div>
-                        <div
-                          className={`text-base font-bold transition-colors duration-500 ${
-                            chartMetrics.costs.value >= 0
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {chartMetrics.costs.value >= 0 ? "+" : ""}
-                          {Math.round(chartMetrics.costs.value)}%
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+ <div className="mb-6">
+  <div className="flex justify-center flex-wrap gap-4 lg:gap-1">
+    {[
+      { label: "Ingresos", value: chartMetrics.revenue.value },
+      { label: "Productividad", value: chartMetrics.productivity.value },
+      { label: "Ventas", value: chartMetrics.sales.value },
+      { label: "Costos", value: chartMetrics.costs.value },
+    ].map((metric, index) => (
+      <div
+        key={index}
+        className={`flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium ${
+          isDark
+            ? "bg-gray-700 text-white"
+            : "bg-white border border-gray-200 text-gray-800"
+        }`}
+      >
+        <span>{metric.label}</span>
 
-                  {/* Dynamic Animated Bar Chart */}
-                  <div className="flex-1 flex items-end justify-between space-x-4 mb-4">
-                    <div className="flex flex-col items-center flex-1">
-                      <div
-                        className={`w-full rounded-t-lg transition-all duration-500 ${
-                          chartMetrics.revenue.value >= 0
-                            ? "bg-gradient-to-t from-green-400 to-green-600"
-                            : "bg-gradient-to-t from-red-400 to-red-600"
-                        }`}
-                        style={{
-                          height: `${Math.max(
-                            20,
-                            Math.abs(chartMetrics.revenue.value) * 4 + 20
-                          )}px`,
-                        }}
-                      ></div>
-                      <div className="mt-2 text-center">
-                        <div
-                          className={`font-bold text-sm transition-colors duration-500 ${
-                            chartMetrics.revenue.value >= 0
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {chartMetrics.revenue.value >= 0 ? "+" : ""}
-                          {Math.round(chartMetrics.revenue.value)}%
-                        </div>
-                        <div
-                          className={`text-xs ${
-                            isDark ? "text-gray-400" : "text-gray-600"
-                          }`}
-                        >
-                          Ingresos
-                        </div>
-                      </div>
-                    </div>
+        {/* Línea separadora */}
+        <span
+          className={`h-4 border-l mx-1 ${
+            isDark ? "border-gray-500" : "border-gray-300"
+          }`}
+        ></span>
 
-                    <div className="flex flex-col items-center flex-1">
-                      <div
-                        className={`w-full rounded-t-lg transition-all duration-500 ${
-                          chartMetrics.productivity.value >= 0
-                            ? "bg-gradient-to-t from-green-400 to-green-600"
-                            : "bg-gradient-to-t from-red-400 to-red-600"
-                        }`}
-                        style={{
-                          height: `${Math.max(
-                            20,
-                            Math.abs(chartMetrics.productivity.value) * 4 + 20
-                          )}px`,
-                        }}
-                      ></div>
-                      <div className="mt-2 text-center">
-                        <div
-                          className={`font-bold text-sm transition-colors duration-500 ${
-                            chartMetrics.productivity.value >= 0
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {chartMetrics.productivity.value >= 0 ? "+" : ""}
-                          {Math.round(chartMetrics.productivity.value)}%
-                        </div>
-                        <div
-                          className={`text-xs ${
-                            isDark ? "text-gray-400" : "text-gray-600"
-                          }`}
-                        >
-                          Productividad
-                        </div>
-                      </div>
-                    </div>
+        {/* Valor con animación de aparición desde abajo */}
+        <span
+  key={`${metric.label}-${metric.value}`} // reinicia animación en cada cambio
+  className={`font-bold ${
+    metric.value >= 0 ? "text-green-500" : "text-red-500"
+  } fade-up`}
+>
+  {metric.value >= 0 ? "+" : ""}
+  {Math.round(metric.value)}%
+</span>
+      </div>
+    ))}
+  </div>
+</div>
 
-                    <div className="flex flex-col items-center flex-1">
-                      <div
-                        className={`w-full rounded-t-lg transition-all duration-500 ${
-                          chartMetrics.sales.value >= 0
-                            ? "bg-gradient-to-t from-green-400 to-green-600"
-                            : "bg-gradient-to-t from-red-400 to-red-600"
-                        }`}
-                        style={{
-                          height: `${Math.max(
-                            20,
-                            Math.abs(chartMetrics.sales.value) * 4 + 20
-                          )}px`,
-                        }}
-                      ></div>
-                      <div className="mt-2 text-center">
-                        <div
-                          className={`font-bold text-sm transition-colors duration-500 ${
-                            chartMetrics.sales.value >= 0
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {chartMetrics.sales.value >= 0 ? "+" : ""}
-                          {Math.round(chartMetrics.sales.value)}%
-                        </div>
-                        <div
-                          className={`text-xs ${
-                            isDark ? "text-gray-400" : "text-gray-600"
-                          }`}
-                        >
-                          Ventas
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col items-center flex-1">
-                      <div
-                        className={`w-full rounded-t-lg transition-all duration-500 ${
-                          chartMetrics.costs.value >= 0
-                            ? "bg-gradient-to-t from-green-400 to-green-600"
-                            : "bg-gradient-to-t from-red-400 to-red-600"
-                        }`}
-                        style={{
-                          height: `${Math.max(
-                            20,
-                            Math.abs(chartMetrics.costs.value) * 4 + 20
-                          )}px`,
-                        }}
-                      ></div>
-                      <div className="mt-2 text-center">
-                        <div
-                          className={`font-bold text-sm transition-colors duration-500 ${
-                            chartMetrics.costs.value >= 0
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {chartMetrics.costs.value >= 0 ? "+" : ""}
-                          {Math.round(chartMetrics.costs.value)}%
-                        </div>
-                        <div
-                          className={`text-xs ${
-                            isDark ? "text-gray-400" : "text-gray-600"
-                          }`}
-                        >
-                          Costos
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+    {/* Gráfico de barras */}
+    <div className="flex-1 flex items-end justify-between space-x-1">
+      {[
+        { label: "Ingresos", value: chartMetrics.revenue.value },
+        { label: "Productividad", value: chartMetrics.productivity.value },
+        { label: "Ventas", value: chartMetrics.sales.value },
+        { label: "Costos", value: chartMetrics.costs.value },
+      ].map((metric, index) => (
+        <div key={index} className="flex flex-col items-center flex-1">
+          <div
+            className={`w-full  transition-all duration-500 ${
+              metric.value >= 0
+                ? "bg-gradient-to-t from-green-400 to-green-600"
+                : "bg-gradient-to-t from-red-400 to-red-600"
+            }`}
+            style={{
+              height: `${Math.max(20, Math.abs(metric.value) * 4 + 20)}px`,
+            }}
+          ></div>
+          <div className="mt-2 text-center">
+            <div
+              className={`font-bold text-sm ${
+                metric.value >= 0 ? "text-green-500" : "text-red-500"
+              }`}
+            >
+              {metric.value >= 0 ? "+" : ""}
+              {Math.round(metric.value)}%
+            </div>
+            <div
+              className={`text-xs ${
+                isDark ? "text-gray-400" : "text-gray-600"
+              }`}
+            >
+              {metric.label}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
                 </div>
               </div>
 
@@ -893,18 +719,18 @@ function App() {
                   {/* Two-Row Carousel and Animated Input */}
                   <div className="flex-1 flex flex-col">
                     {/* Two-Row Horizontal Scrolling Carousel */}
-                    <div className="mb-8 overflow-hidden space-y-3">
+                    <div className="mb-8 overflow-hidden space-y-3 fade-mask">
                       {/* First Row */}
-                      <div className="animate-scroll-horizontal flex space-x-3">
+                      <div className="animate-scroll-horizontal flex space-x-3 ">
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border  ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <Sparkles className="w-4 h-4 text-white" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -915,14 +741,14 @@ function App() {
                           </div>
                         </div>
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                            <Activity className="w-4 h-4 text-yellow-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -933,14 +759,14 @@ function App() {
                           </div>
                         </div>
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <Mail className="w-4 h-4 text-purple-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -952,14 +778,14 @@ function App() {
                         </div>
                         {/* Duplicates for seamless loop */}
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <Sparkles className="w-4 h-4 text-blue-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -970,14 +796,14 @@ function App() {
                           </div>
                         </div>
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                            <Activity className="w-4 h-4 text-yellow-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -988,14 +814,14 @@ function App() {
                           </div>
                         </div>
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <Mail className="w-4 h-4 text-purple-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -1010,14 +836,14 @@ function App() {
                       {/* Second Row - Reverse Direction */}
                       <div className="animate-scroll-horizontal-reverse flex space-x-3">
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                            <Activity className="w-4 h-4 text-yellow-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -1028,14 +854,14 @@ function App() {
                           </div>
                         </div>
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
+                            <BarChart className="w-4 h-4 text-pink-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -1046,14 +872,14 @@ function App() {
                           </div>
                         </div>
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                           <Bot className="w-4 h-4 text-green-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -1065,14 +891,14 @@ function App() {
                         </div>
                         {/* Duplicates for seamless loop */}
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                            <Sparkles className="w-4 h-4 text-blue-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -1083,14 +909,14 @@ function App() {
                           </div>
                         </div>
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
+                            <BarChart className="w-4 h-4 text-pink-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -1101,14 +927,14 @@ function App() {
                           </div>
                         </div>
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                            <Bot className="w-4 h-4 text-green-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -1122,14 +948,14 @@ function App() {
                              {/* tree Row - Reverse Direction */}
                       <div className="animate-scroll-horizontal-tree flex space-x-3">
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                            <Mail className="w-4 h-4 text-purple-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -1140,14 +966,14 @@ function App() {
                           </div>
                         </div>
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
+                            <Activity className="w-4 h-4 text-yellow-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -1158,14 +984,14 @@ function App() {
                           </div>
                         </div>
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                            <BarChart className="w-4 h-4 text-pink-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -1177,14 +1003,14 @@ function App() {
                         </div>
                         {/* Duplicates for seamless loop */}
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                            <Sparkles className="w-4 h-4 text-blue-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -1194,33 +1020,16 @@ function App() {
                             </span>
                           </div>
                         </div>
+            
                         <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-full border ${
                             isDark
                               ? "bg-gray-700 border-gray-600"
                               : "bg-gray-600 border-gray-500"
                           }`}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
-                            <span
-                              className={`text-xs whitespace-nowrap ${
-                                isDark ? "text-gray-300" : "text-gray-200"
-                              }`}
-                            >
-                              IA Chatbots
-                            </span>
-                          </div>
-                        </div>
-                        <div
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
-                            isDark
-                              ? "bg-gray-700 border-gray-600"
-                              : "bg-gray-600 border-gray-500"
-                          }`}
-                        >
-                          <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                           <Bot className="w-4 h-4 text-green-400" />
                             <span
                               className={`text-xs whitespace-nowrap ${
                                 isDark ? "text-gray-300" : "text-gray-200"
@@ -1491,6 +1300,217 @@ function App() {
           </div>
         </section>
 
+        {/* Video Testimonials Carousel Section */}
+        <section
+          id="testimonios"
+          className={`py-20 transition-colors duration-300 ${
+            isDark ? "bg-gray-900" : "bg-gray-50"
+          }`}
+        >
+          <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Header */}
+            <div
+              id="testimonials-header"
+              className={`text-center mb-16 transition-all duration-1000 ${
+                isVisible["testimonials-header"]
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-10"
+              }`}
+            >
+              <h2
+                className={`text-4xl lg:text-5xl font-bold mb-6 transition-colors duration-300 ${
+                  isDark ? "text-white" : "text-gray-900"
+                }`}
+              >
+                Lo que dicen nuestros clientes
+              </h2>
+              <p
+                className={`text-xl max-w-3xl mx-auto transition-colors duration-300 ${
+                  isDark ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
+                Historias reales de personas que transformaron su vida aprendiendo a usar IA en serio.
+              </p>
+            </div>
+
+            {/* Testimonials Carousel */}
+            <div className="relative">
+              {/* Fade gradients on sides */}
+              <div
+                className={`absolute left-0 top-0 w-32 h-full z-20 pointer-events-none ${
+                  isDark
+                    ? "bg-gradient-to-r from-gray-900 to-transparent"
+                    : "bg-gradient-to-r from-gray-50 to-transparent"
+                }`}
+              ></div>
+              <div
+                className={`absolute right-0 top-0 w-32 h-full z-20 pointer-events-none ${
+                  isDark
+                    ? "bg-gradient-to-l from-gray-900 to-transparent"
+                    : "bg-gradient-to-l from-gray-50 to-transparent"
+                }`}
+              ></div>
+
+              {/* Main testimonial display */}
+              <div
+                id="testimonials-carousel"
+                className={`transition-all duration-1000 ${
+                  isVisible["testimonials-carousel"]
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
+                }`}
+              >
+                <div className="relative overflow-hidden">
+                  {/* Testimonial Cards Container - Infinite Scroll */}
+                  <div className="flex animate-testimonials-scroll gap-8">
+                    {/* First set of testimonials */}
+                    {videoTestimonials.map((testimonial, index) => (
+                      <div
+                        key={`first-${index}`}
+                        className="w-80 flex-shrink-0"
+                      >
+                        <div
+                          className={`rounded-3xl p-6 transition-all duration-300 ${
+                            isDark
+                              ? "bg-gray-800 border border-gray-700 shadow-2xl shadow-cyan-500/10"
+                              : "bg-white border border-gray-200 shadow-2xl shadow-blue-500/10"
+                          }`}
+                        >
+                          {/* Testimonial Text */}
+                          <div className="mb-6">
+                            <div className="relative">
+                              <div className="absolute -top-2 -left-2 text-4xl text-cyan-400 opacity-30">
+                                "
+                              </div>
+                              <blockquote
+                                className={`text-lg leading-relaxed font-medium relative z-10 transition-colors duration-300 ${
+                                  isDark ? "text-gray-200" : "text-gray-700"
+                                }`}
+                              >
+                                {testimonial.content}
+                              </blockquote>
+                            </div>
+                          </div>
+
+                          {/* Video */}
+                          <div className="mb-6">
+                            <div className="relative rounded-2xl overflow-hidden shadow-lg">
+                              <video
+                                src={testimonial.videoSrc}
+                                poster={testimonial.thumbnail}
+                                controls
+                                className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                                preload="metadata"
+                              >
+                                Tu navegador no soporta el elemento de video.
+                              </video>
+                            </div>
+                          </div>
+
+                          {/* User Info */}
+                          <div className="flex items-center space-x-4">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-xl shadow-lg">
+                              {testimonial.avatar}
+                            </div>
+                            <div>
+                              <h3
+                                className={`text-lg font-bold transition-colors duration-300 ${
+                                  isDark ? "text-white" : "text-gray-900"
+                                }`}
+                              >
+                                {testimonial.name}
+                              </h3>
+                              <p
+                                className={`text-sm font-medium transition-colors duration-300 ${
+                                  isDark ? "text-cyan-400" : "text-blue-600"
+                                }`}
+                              >
+                                {testimonial.role}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* Duplicate set for seamless infinite loop */}
+                    {videoTestimonials.map((testimonial, index) => (
+                      <div
+                        key={`second-${index}`}
+                        className="w-80 flex-shrink-0"
+                      >
+                        <div
+                          className={`rounded-3xl p-6 transition-all duration-300 ${
+                            isDark
+                              ? "bg-gray-800 border border-gray-700 shadow-2xl shadow-cyan-500/10"
+                              : "bg-white border border-gray-200 shadow-2xl shadow-blue-500/10"
+                          }`}
+                        >
+                          {/* Testimonial Text */}
+                          <div className="mb-6">
+                            <div className="relative">
+                              <div className="absolute -top-2 -left-2 text-4xl text-cyan-400 opacity-30">
+                                "
+                              </div>
+                              <blockquote
+                                className={`text-lg leading-relaxed font-medium relative z-10 transition-colors duration-300 ${
+                                  isDark ? "text-gray-200" : "text-gray-700"
+                                }`}
+                              >
+                                {testimonial.content}
+                              </blockquote>
+                            </div>
+                          </div>
+
+                          {/* Video */}
+                          <div className="mb-6">
+                            <div className="relative rounded-2xl overflow-hidden shadow-lg">
+                              <video
+                                src={testimonial.videoSrc}
+                                poster={testimonial.thumbnail}
+                                controls
+                                className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                                preload="metadata"
+                              >
+                                Tu navegador no soporta el elemento de video.
+                              </video>
+                            </div>
+                          </div>
+
+                          {/* User Info */}
+                          <div className="flex items-center space-x-4">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-xl shadow-lg">
+                              {testimonial.avatar}
+                            </div>
+                            <div>
+                              <h3
+                                className={`text-lg font-bold transition-colors duration-300 ${
+                                  isDark ? "text-white" : "text-gray-900"
+                                }`}
+                              >
+                                {testimonial.name}
+                              </h3>
+                              <p
+                                className={`text-sm font-medium transition-colors duration-300 ${
+                                  isDark ? "text-cyan-400" : "text-blue-600"
+                                }`}
+                              >
+                                {testimonial.role}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Final CTA Section */}
         <section className="py-20 bg-cyan-900 transition-colors duration-300  relative overflow-hidden">
           <div className="absolute inset-0 opacity-20">
@@ -1517,173 +1537,6 @@ function App() {
                   <span className="relative z-10">Acepto crecer contigo</span>
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200 relative z-10" />
                 </button>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/* Video Testimonials Carousel Section */}
-        <section
-          id="testimonios"
-          className="py-20 transition-colors duration-300"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div
-              id="testimonials-header"
-              className={`text-center mb-16 transition-all duration-1000 ${
-                isVisible["testimonials-header"]
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-10"
-              }`}
-            >
-              <h2
-                className={`text-4xl font-bold mb-4 transition-colors duration-300 ${
-                  isDark ? "text-white" : "text-gray-900"
-                }`}
-              >
-                Lo que dicen nuestros clientes
-              </h2>
-              <p
-                className={`text-xl max-w-3xl mx-auto transition-colors duration-300 ${
-                  isDark ? "text-gray-300" : "text-gray-600"
-                }`}
-              >
-                Historias reales de transformación empresarial
-              </p>
-            </div>
-
-            {/* Video Carousel - 3 Videos per Page */}
-            <div className="relative max-w-7xl mx-auto">
-              {/* Main Video Display */}
-              <div className="relative overflow-hidden">
-                <div
-                  className="flex transition-transform duration-500 ease-in-out"
-                  style={{
-                    transform: `translateX(-${currentVideoIndex * 100}%)`,
-                  }}
-                >
-                  {Array.from({ length: totalPages }).map((_, pageIndex) => (
-                    <div key={pageIndex} className="w-full flex-shrink-0">
-                      <div
-                        className={`grid gap-6 ${
-                          isMobile ? "grid-cols-1" : "md:grid-cols-3"
-                        }`}
-                      >
-                        {videoTestimonials
-                          .slice(
-                            pageIndex * videosPerPage,
-                            (pageIndex + 1) * videosPerPage
-                          )
-                          .map((testimonial, index) => (
-                            <div key={index} className="group">
-                              <div
-                                className={`rounded-2xl overflow-hidden border-2 p-4 ${
-                                  isDark
-                                    ? "border-gray-700 bg-gray-800"
-                                    : "border-gray-200 bg-white"
-                                } shadow-lg hover:shadow-xl transition-all duration-300`}
-                              >
-                                {/* Description at the top */}
-                                <div className="mb-4">
-                                  <p
-                                    className={`text-sm font-medium leading-tight ${
-                                      isDark ? "text-gray-200" : "text-gray-700"
-                                    }`}
-                                  >
-                                    {testimonial.content}
-                                  </p>
-                                </div>
-
-                                {/* Video in the middle */}
-                                <div className="relative aspect-video rounded-xl overflow-hidden mb-4 bg-black">
-                                  <video
-                                    className="w-full h-full object-contain"
-                                    controls
-                                    preload="metadata"
-                                    poster={testimonial.thumbnail}
-                                  >
-                                    <source
-                                      src={testimonial.videoSrc}
-                                      type="video/mp4"
-                                    />
-                                    Tu navegador no soporta el elemento video.
-                                  </video>
-                                </div>
-
-                                {/* Name and avatar at the bottom */}
-                                <div className="flex items-center">
-                                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-full flex items-center justify-center text-lg mr-3 shadow-lg">
-                                    <span>{testimonial.avatar}</span>
-                                  </div>
-                                  <div>
-                                    <h4
-                                      className={`font-bold text-base ${
-                                        isDark ? "text-white" : "text-gray-900"
-                                      }`}
-                                    >
-                                      {testimonial.name}
-                                    </h4>
-                                    <p
-                                      className={`text-sm ${
-                                        isDark
-                                          ? "text-gray-400"
-                                          : "text-gray-600"
-                                      }`}
-                                    >
-                                      {testimonial.role}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Navigation Arrows - Responsive positioning */}
-              <button
-                onClick={prevVideo}
-                className={`absolute ${
-                  isMobile ? "left-2" : "-left-16"
-                } top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
-                  isDark
-                    ? "bg-gray-800/90 hover:bg-gray-700 text-white"
-                    : "bg-white/90 hover:bg-white text-gray-900"
-                } shadow-lg hover:scale-110 z-20`}
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-
-              <button
-                onClick={nextVideo}
-                className={`absolute ${
-                  isMobile ? "right-2" : "-right-16"
-                } top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
-                  isDark
-                    ? "bg-gray-800/90 hover:bg-gray-700 text-white"
-                    : "bg-white/90 hover:bg-white text-gray-900"
-                } shadow-lg hover:scale-110 z-20`}
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-
-              {/* Dots Indicator */}
-              <div className="flex justify-center mt-8 space-x-3">
-                {Array.from({ length: totalPages }).map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => goToVideo(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === currentVideoIndex
-                        ? "bg-cyan-400 scale-125"
-                        : isDark
-                        ? "bg-gray-600 hover:bg-gray-500"
-                        : "bg-gray-300 hover:bg-gray-400"
-                    }`}
-                  />
-                ))}
               </div>
             </div>
           </div>
