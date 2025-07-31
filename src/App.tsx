@@ -1670,7 +1670,7 @@ function App() {
               </h2>
               <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
                 El momento es ahora. Súmate con nosotros y descubre la libertad
-                dee crear, escalar y liderar con IA.
+                de crear, escalar y liderar con IA.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button className="bg-white text-cyan-600 px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center group relative overflow-hidden">
