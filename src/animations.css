@@ -218,3 +218,8 @@
 .animate-testimonials-scroll-paused {
   animation-play-state: paused;
 }
+
+/* Smooth drag transition */
+.testimonials-dragging {
+  transition: none !important;
+}

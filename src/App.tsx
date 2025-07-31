@@ -257,7 +257,79 @@ function App() {
     return () => window.removeEventListener("resize", checkMobile);
   }, [isMobile]);
 
-  // No necesitamos estado para el carrusel infinito ya que será puramente CSS
+  // Drag functionality state
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [startX, setStartX] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [accumulatedOffset, setAccumulatedOffset] = useState(0);
+
+  // Mouse and touch handlers for testimonials carousel
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartX(e.clientX);
+    setIsPaused(true);
+    e.preventDefault();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - startX;
+    setDragOffset(deltaX);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setDragOffset(0);
+    setIsPaused(false);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].clientX);
+    setIsPaused(true);
+    e.preventDefault();
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    const deltaX = e.touches[0].clientX - startX;
+    setDragOffset(deltaX);
+    e.preventDefault();
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    setDragOffset(0);
+    setIsPaused(false);
+  };
+
+  // Global mouse events for smooth dragging
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      const deltaX = e.clientX - startX;
+      setDragOffset(deltaX);
+    };
+
+    const handleGlobalMouseUp = () => {
+      if (isDragging) {
+        setIsDragging(false);
+        setDragOffset(0);
+        setIsPaused(false);
+      }
+    };
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleGlobalMouseMove);
+      document.addEventListener('mouseup', handleGlobalMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging, startX]);
 
 
 
@@ -1360,9 +1432,24 @@ function App() {
                     : "opacity-0 translate-y-10"
                 }`}
               >
-                <div className="relative overflow-hidden">
+                <div
+                  className="relative overflow-hidden cursor-grab active:cursor-grabbing"
+                  onMouseDown={handleMouseDown}
+                  onMouseMove={handleMouseMove}
+                  onMouseUp={handleMouseUp}
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                >
                   {/* Testimonial Cards Container - Infinite Scroll */}
-                  <div className="flex animate-testimonials-scroll gap-8">
+                  <div
+                    className={`flex gap-8 ${isPaused ? '' : 'animate-testimonials-scroll'}`}
+                    style={{
+                      transform: `translateX(${dragOffset}px)`,
+                      transition: isDragging ? 'none' : 'transform 0.3s ease-out',
+                      userSelect: 'none'
+                    }}
+                  >
                     {/* First set of testimonials */}
                     {videoTestimonials.map((testimonial, index) => (
                       <div
