@@ -489,8 +489,8 @@ function App() {
                     }`}
                   >
                     <div className="flex items-center space-x-3">
-                      <div className="text-4xl">{brand.logo}</div>
-                      <span className="text-2xl font-medium whitespace-nowrap">
+                      <div className="text-xl md:text-2xl">{brand.logo}</div>
+                      <span className="text-xl md:text-2xl font-medium whitespace-nowrap">
                         {brand.name}
                       </span>
                     </div>
@@ -505,8 +505,8 @@ function App() {
                     }`}
                   >
                     <div className="flex items-center space-x-3">
-                      <div className="text-2xl">{brand.logo}</div>
-                      <span className="text-lg font-medium whitespace-nowrap">
+                      <div className="text-xl md:text-2xl">{brand.logo}</div>
+                      <span className="text-xl md:text-2xl font-medium whitespace-nowrap">
                         {brand.name}
                       </span>
                     </div>
